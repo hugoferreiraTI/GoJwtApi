@@ -87,7 +87,8 @@ func TestCreatUser(t *testing.T) {
 
 	userRepo := repository.NewUserRepository(sql)
 
-	initializeUserRegister := usecases.NewAuthUseCase(userRepo)
+	cfg, _ := jwtconfig.Load()
+	initializeUserRegister := usecases.NewAuthUseCase(userRepo, []byte(cfg.Secret), cfg.TokenExpiry)
 
 	value, errRegister := initializeUserRegister.Register(user.Email, user.Password)
 
@@ -97,4 +98,33 @@ func TestCreatUser(t *testing.T) {
 
 	fmt.Print(value)
 	fmt.Print(errRegister)
+}
+
+func TestGenerateToken(t *testing.T) {
+	user := model.UserLogin{
+		Email:    "hugoferreiraferro@gmail.com",
+		Password: "123456",
+	}
+	//abrindo conexão com banco de dados
+	sql, err := db.ConnectDB()
+
+	if err != nil {
+		t.Fatalf("Conexão com o banco de dados falhou: %v", err)
+	}
+
+	fmt.Print("Conexão bem sucedida, tentando iniciar comando sql")
+	//fecho conexão com banco de dados
+	defer sql.Close()
+
+	userRepo := repository.NewUserRepository(sql)
+	cfg, _ := jwtconfig.Load()
+	initializeUserRegister := usecases.NewAuthUseCase(userRepo, []byte(cfg.Secret), cfg.TokenExpiry)
+
+	token, err := initializeUserRegister.Login(user)
+
+	if token == "" {
+		fmt.Print("ERRO, TOKEN NÃO FOI GERADO")
+	}
+	fmt.Print(token)
+
 }

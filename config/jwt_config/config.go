@@ -20,7 +20,7 @@ func Load() (*Jwt, error) {
 
 	if err != nil {
 		fmt.Println("Error ao carregar o arquivo .env: ", err)
-		return nil, nil
+		return nil, err
 	}
 
 	cfg.Secret = getEnv("SECRET", "chave-reserva-se-o-env-sumir")

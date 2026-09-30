@@ -1,5 +1,14 @@
 services: 
-  go_db:
+    go-app:
+    container_name: go-api-jwt
+    image: go-api #image
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - go_db
+
+    go_db:
     container_name: go_jwt #Nome da image
     image: postgres:12 #O banco e a versao
     environment: #variaveis de ambiente do container
