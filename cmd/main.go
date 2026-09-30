@@ -47,8 +47,6 @@ func main() {
 		protected.POST("/logout", authHandler.Logout)
 	}
 
-	// Inicia o servidor na porta 8080
-	server.Run(":8080")
+	// Inicia o servidor na porta 8000
+	server.Run(":8000")
 }
-
-//"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpZWdvQGhvdG1haWwuY29tIiwiZXhwIjoxNzkwNzg1MDc3LCJpYXQiOjE3OTA3ODUwNzcsInVzZXJfaWQiOjR9.v8PChtbbFIypV5n0Uo7fFrEpszPwLjAdVQCILbpE6fQ"
